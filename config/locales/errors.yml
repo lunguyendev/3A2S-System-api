@@ -1,0 +1,4 @@
+en:
+  errors:
+    invalid_token: "Token không hợp lệ"
+    missing_token: "Không tồn tại token"

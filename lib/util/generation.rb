@@ -13,9 +13,5 @@ module Util
     def generate_hash_password(password)
       BCrypt::Password.create(password).to_s
     end
-
-    def match_password?(password, hash_password)
-      BCrypt::Password.new(hash_password) == password
-    end
   end
 end
