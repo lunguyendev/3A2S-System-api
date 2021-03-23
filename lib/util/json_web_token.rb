@@ -1,17 +1,18 @@
 # frozen_string_literal: true
 
-class Util::JsonWebToken
+module Util::JsonWebToken
   ALGORITHM = "HS256"
 
-  def self.encode(payload)
+  def encode(payload, exp = 6.hours.from_now)
+    payload[:exp] = exp.to_i
     JWT.encode(payload, auth_secret, ALGORITHM)
   end
 
-  def self.decode(token)
+  def decode(token)
     JWT.decode(token, auth_secret, true, { algorithm: ALGORITHM }).first
   end
 
-  def self.auth_secret
+  def auth_secret
     ENV["JWT_SECRET"]
   end
 end

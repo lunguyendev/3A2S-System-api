@@ -85,3 +85,5 @@ test:
 production:
   <<: *default
   database: app_3A2S_system_production
+  username: system_3A2S_api
+  password: <%= ENV['SYSTEM_3A2S_API_DATABASE_PASSWORD'] %>
