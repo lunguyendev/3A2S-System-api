@@ -10,6 +10,7 @@ Rails.application.routes.draw do
           get :logout
         end
       end
+      resources :event, only: [:index, :create, :show], param: :uid
     end
   end
 end

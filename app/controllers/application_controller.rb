@@ -6,6 +6,6 @@ class ApplicationController < ActionController::API
 
   private
     def authorize_request
-      @current_user = Auth::Authorization.new(request.headers).execute
+      @current_user ||= Auth::Authorization.new(request.headers).execute
     end
 end
