@@ -10,10 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_12_082704) do
+ActiveRecord::Schema.define(version: 2021_03_27_030926) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "events", primary_key: "uid", id: :string, force: :cascade do |t|
+    t.string "user_uid"
+    t.integer "type_event"
+    t.integer "size"
+    t.string "organization"
+    t.string "description"
+    t.integer "status", default: 0, null: false
+    t.datetime "start_at"
+    t.datetime "end_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["uid"], name: "index_events_on_uid", unique: true
+  end
 
   create_table "users", primary_key: "uid", id: :string, force: :cascade do |t|
     t.string "name"
@@ -34,4 +48,5 @@ ActiveRecord::Schema.define(version: 2021_03_12_082704) do
     t.index ["uid"], name: "index_users_on_uid", unique: true
   end
 
+  add_foreign_key "events", "users", column: "user_uid", primary_key: "uid", on_update: :cascade, on_delete: :cascade
 end
