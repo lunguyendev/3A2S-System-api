@@ -42,7 +42,6 @@ class Api::V1::EventController < ApplicationController
       event_uid: event.uid,
       user_uid: @current_user.uid
     )
-
     head :created
   end
 
