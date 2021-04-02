@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_27_030926) do
+ActiveRecord::Schema.define(version: 2021_03_30_073730) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,6 +27,15 @@ ActiveRecord::Schema.define(version: 2021_03_27_030926) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["uid"], name: "index_events_on_uid", unique: true
+  end
+
+  create_table "take_part_in_events", primary_key: "uid", id: :string, force: :cascade do |t|
+    t.string "user_uid"
+    t.string "event_uid"
+    t.integer "status", default: 0, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["uid"], name: "index_take_part_in_events_on_uid", unique: true
   end
 
   create_table "users", primary_key: "uid", id: :string, force: :cascade do |t|
@@ -49,4 +58,6 @@ ActiveRecord::Schema.define(version: 2021_03_27_030926) do
   end
 
   add_foreign_key "events", "users", column: "user_uid", primary_key: "uid", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "take_part_in_events", "events", column: "event_uid", primary_key: "uid", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "take_part_in_events", "users", column: "user_uid", primary_key: "uid", on_update: :cascade, on_delete: :cascade
 end

@@ -31,7 +31,18 @@ class Api::V1::EventController < ApplicationController
 
   def show
     event = Event.find(params[:uid])
+
     render json: event, serializer: Api::V1::EventSerializer
+  end
+
+  def join_event
+    event = Event.find(params[:uid])
+
+    TakePartInEvent.create(
+      event_uid: event.uid,
+      user_uid: @current_user.uid
+    )
+    head :created
   end
 
   private

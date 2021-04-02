@@ -10,7 +10,12 @@ Rails.application.routes.draw do
           get :logout
         end
       end
-      resources :event, only: [:index, :create, :show], param: :uid
+
+      resources :event, only: [:index, :create, :show], param: :uid do
+        member do
+          get :join_event
+        end
+      end
     end
   end
 end
