@@ -36,12 +36,11 @@ class Api::V1::EventController < ApplicationController
   end
 
   def join_event
-    event = Event.find(params[:uid])
-
-    TakePartInEvent.create(
-      event_uid: event.uid,
+    Api::Event::JoinEvent.new(
+      event_uid: params[:uid],
       user_uid: @current_user.uid
-    )
+    ).execute
+
     head :created
   end
 
