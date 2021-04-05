@@ -36,12 +36,23 @@ class Api::V1::EventController < ApplicationController
   end
 
   def join_event
-    Api::Event::JoinEvent.new(
+    Api::Event::JoinerEvent.new(
       event_uid: params[:uid],
       user_uid: @current_user.uid
     ).execute
 
     head :created
+  end
+
+  def generate_qr_code
+    qr_code = Api::Event::CreatorQrEvent.new(
+      object: target_event,
+      expired_time: params[:expired_time]
+    ).execute
+
+    render json: {
+      qr_code: qr_code.qr_code_string
+    }, status: :created
   end
 
   private
@@ -55,5 +66,9 @@ class Api::V1::EventController < ApplicationController
         :start_at,
         :end_at
       )
+    end
+
+    def target_event
+      Event.find(params[:uid])
     end
 end

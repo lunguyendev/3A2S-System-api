@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_30_073730) do
+ActiveRecord::Schema.define(version: 2021_04_02_094245) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,6 +36,18 @@ ActiveRecord::Schema.define(version: 2021_03_30_073730) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["uid"], name: "index_take_part_in_events_on_uid", unique: true
+  end
+
+  create_table "tokens", force: :cascade do |t|
+    t.string "qr_code_id"
+    t.string "qr_code_type"
+    t.string "qr_code_string"
+    t.integer "status"
+    t.datetime "expired_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["qr_code_id"], name: "index_tokens_on_qr_code_id", unique: true
+    t.index ["qr_code_string"], name: "index_tokens_on_qr_code_string", unique: true
   end
 
   create_table "users", primary_key: "uid", id: :string, force: :cascade do |t|
