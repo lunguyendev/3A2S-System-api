@@ -12,6 +12,7 @@ module Errors::ExceptionHandler
     rescue_from Errors::ExceptionHandler::AuthenticationError, with: :unauthorized_request
     rescue_from Errors::ExceptionHandler::MissingToken, with: :four_twenty_two
     rescue_from Errors::ExceptionHandler::InvalidToken, with: :four_twenty_two
+    rescue_from JWT::ExpiredSignature, with: :four_twenty_two
     rescue_from Errors::ExceptionHandler::InvalidAction, with: :bad_request
 
     rescue_from ActiveRecord::RecordNotFound do |e|
