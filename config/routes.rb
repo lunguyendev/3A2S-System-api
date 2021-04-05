@@ -14,9 +14,15 @@ Rails.application.routes.draw do
       resources :event, only: [:index, :create, :show], param: :uid do
         member do
           get :join_event
-          post :generate_qr_code
-          get :qr_code
         end
+
+        resources :token, only: [:create], module: :event do
+          collection do
+            get :qr_code
+          end
+        end
+
+        resources :take_part_in_event, only: [:create], module: :event
       end
     end
   end

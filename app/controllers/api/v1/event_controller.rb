@@ -35,34 +35,6 @@ class Api::V1::EventController < ApplicationController
     render json: event, serializer: Api::V1::EventSerializer
   end
 
-  def join_event
-    Api::Event::JoinerEvent.new(
-      event_uid: params[:uid],
-      user_uid: @current_user.uid
-    ).execute
-
-    head :created
-  end
-
-  def generate_qr_code
-    qr_code = Api::Event::CreatorQrEvent.new(
-      object: target_event,
-      expired_time: params[:expired_time]
-    ).execute
-
-    render json: {
-      qr_code: qr_code.qr_code_string
-    }, status: :created
-  end
-
-  def qr_code
-    qr_code = Token.find_by!(qr_code_id: params[:uid])
-
-    render json: {
-      qr_code: qr_code.qr_code_string
-    }, status: :ok
-  end
-
   private
     def params_event_create
       params.require(:event).permit(
@@ -74,9 +46,5 @@ class Api::V1::EventController < ApplicationController
         :start_at,
         :end_at
       )
-    end
-
-    def target_event
-      Event.find(params[:uid])
     end
 end
