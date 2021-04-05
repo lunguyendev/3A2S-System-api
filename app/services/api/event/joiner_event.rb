@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Api::Event::JoinEvent
+class Api::Event::JoinerEvent
   def initialize(args = {})
     @event = args[:event_uid]
     @user = args[:user_uid]
