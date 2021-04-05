@@ -24,6 +24,12 @@ Rails.application.routes.draw do
 
         resources :take_part_in_event, only: [:create], module: :event
       end
+
+      resources :tokens, only: [], param: :token_string do
+        member do
+          get :attendace_by_qr_code
+        end
+      end
     end
   end
 end
