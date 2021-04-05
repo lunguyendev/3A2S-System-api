@@ -55,6 +55,14 @@ class Api::V1::EventController < ApplicationController
     }, status: :created
   end
 
+  def qr_code
+    qr_code = Token.find_by!(qr_code_id: params[:uid])
+
+    render json: {
+      qr_code: qr_code.qr_code_string
+    }, status: :ok
+  end
+
   private
     def params_event_create
       params.require(:event).permit(

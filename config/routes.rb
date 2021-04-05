@@ -15,6 +15,7 @@ Rails.application.routes.draw do
         member do
           get :join_event
           post :generate_qr_code
+          get :qr_code
         end
       end
     end
