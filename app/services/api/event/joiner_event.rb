@@ -16,7 +16,7 @@ class Api::Event::JoinerEvent
     attr_reader :event, :user
 
     def target_event
-      @target_event ||= Event.find(event)
+      @target_event ||= Event.accept.find_by!(uid: event)
     end
 
     def check_join_event?
