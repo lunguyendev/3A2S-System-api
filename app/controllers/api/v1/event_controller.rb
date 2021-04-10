@@ -10,7 +10,8 @@ class Api::V1::EventController < ApplicationController
 
     event_serializable = ActiveModelSerializers::SerializableResource.new(
       @collection_event,
-      each_serializer: Api::V1::EventSerializer
+      each_serializer: Api::V1::EventSerializer,
+      current_user: @current_user
     )
 
     response_hash = {
@@ -24,15 +25,15 @@ class Api::V1::EventController < ApplicationController
   end
 
   def create
-    event = @current_user.events.create(params_event_create)
+    @current_user.events.create(params_event_create)
 
-    render json: event, serializer: Api::V1::EventSerializer
+    head :created
   end
 
   def show
     event = Event.find(params[:uid])
 
-    render json: event, serializer: Api::V1::EventSerializer
+    render json: event, serializer: Api::V1::EventSerializer, current_user: @current_user
   end
 
   private

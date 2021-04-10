@@ -33,6 +33,7 @@ gem "jwt"
 # Build attributes of model to json
 gem "active_model_serializers", "~> 0.10.10"
 gem "kaminari"
+gem "faker"
 
 group :development, :test do
   # Call "byebug" anywhere in the code to stop execution and get a debugger console
@@ -46,6 +47,7 @@ group :development do
   gem "rubocop-performance"
   gem "spring"
   gem "spring-watcher-listen", "~> 2.0.0"
+  gem "faker"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
