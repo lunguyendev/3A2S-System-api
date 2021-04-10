@@ -27,7 +27,7 @@ Rails.application.routes.draw do
 
       resources :tokens, only: [], param: :token_string do
         member do
-          get :attendace_by_qr_code
+          get :attendance_by_qr_code
         end
       end
     end
