@@ -37,5 +37,14 @@ module App
     config.api_only = true
     config.autoload_paths << Rails.root.join("lib")
     config.i18n.load_path += Dir[Rails.root.join("config", "locales", "**", "*.{rb,yml}")]
+
+    config.middleware.insert_before 0, Rack::Cors do
+      allow do
+        origins "*"
+        resource "*",
+                 headers: :any,
+                 methods: [:get, :post, :delete, :patch, :options, :head, :put]
+      end
+    end
   end
 end
