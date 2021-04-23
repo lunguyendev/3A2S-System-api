@@ -30,6 +30,15 @@ Rails.application.routes.draw do
           get :attendance_by_qr_code
         end
       end
+
+      scope module: :admin do
+        resources :event, only: [], param: :event_uid do
+          member do
+            patch :approve_event
+            patch :cancel_event
+          end
+        end
+      end
     end
   end
 end

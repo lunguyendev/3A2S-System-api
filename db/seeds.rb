@@ -13,8 +13,11 @@ student = Student.create(email: "student_01@dtu.edu.com", hashed_password: passw
 password_lecturer = generate_hash_password("password123")
 lecture = Lecturer.create(email: "lecture_01@dtu.edu.com", hashed_password: password_lecturer)
 
+password_lecturer = generate_hash_password("password123")
+lecture = Lecturer.create(email: "admin@dtu.edu.com", hashed_password: password_lecturer, role: 1)
+
 # Create event
-(1..5).to_a.each do |index|
+(1..10).to_a.each do |index|
   param_event = {
     event_name: "Sự kiện " + Faker::Job.title,
     type_event: (1..7).to_a.sample,
@@ -30,6 +33,9 @@ end
 # Update status event
 event = Event.first
 event.accept!
+
+Event.last.accept!
+Event.second.accept!
 
 # Take part in event
 TakePartInEvent.create(

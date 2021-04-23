@@ -3,6 +3,7 @@
 module Errors::ExceptionHandler
   extend ActiveSupport::Concern
   class AuthenticationError < StandardError; end
+  class PermissionDenied < StandardError; end
   class MissingToken < StandardError; end
   class InvalidToken < StandardError; end
   class InvalidAction < StandardError; end
@@ -10,6 +11,7 @@ module Errors::ExceptionHandler
   included do
     rescue_from ActiveRecord::RecordInvalid, with: :four_twenty_two
     rescue_from Errors::ExceptionHandler::AuthenticationError, with: :unauthorized_request
+    rescue_from Errors::ExceptionHandler::PermissionDenied, with: :unauthorized_request
     rescue_from Errors::ExceptionHandler::MissingToken, with: :four_twenty_two
     rescue_from Errors::ExceptionHandler::InvalidToken, with: :four_twenty_two
     rescue_from JWT::ExpiredSignature, with: :four_twenty_two
