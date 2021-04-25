@@ -18,6 +18,10 @@ class Api::V1::UserController < ApplicationController
     head :ok
   end
 
+  def ping_role
+    render json: { role: @current_user.role }
+  end
+
   private
     def auth_params
       params.permit(:email, :password)

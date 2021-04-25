@@ -8,6 +8,7 @@ Rails.application.routes.draw do
         collection do
           post :login
           get :logout
+          get :ping_role
         end
       end
 
