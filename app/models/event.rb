@@ -5,4 +5,6 @@ class Event < ApplicationRecord
   has_many :take_part_in_events, foreign_key: :event_uid, primary_key: :uid
   has_one :token, as: :qr_code
   enum status: %i(pending cancel accept)
+
+  scope :created_at_desc, -> { order created_at: :desc }
 end
