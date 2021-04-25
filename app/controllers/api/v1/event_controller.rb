@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Api::V1::EventController < ApplicationController
+  before_action :check_role_creator, only: [:create]
+
   def index
     event = Api::Event::FilterEvent.new(
       { type: params[:type] }

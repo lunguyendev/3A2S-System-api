@@ -8,13 +8,13 @@ Faker::Config.locale = :vi
 
 # Create account user
 password_user = generate_hash_password("password123")
-student = Student.create(email: "student_01@dtu.edu.com", hashed_password: password_user)
+student = Student.create(email: "student_01@dtu.edu.com", hashed_password: password_user, role: 0)
+Student.create(email: "student_02@dtu.edu.com", hashed_password: password_user, role: 1)
 
 password_lecturer = generate_hash_password("password123")
-lecture = Lecturer.create(email: "lecture_01@dtu.edu.com", hashed_password: password_lecturer)
-
-password_lecturer = generate_hash_password("password123")
-lecture = Lecturer.create(email: "admin@dtu.edu.com", hashed_password: password_lecturer, role: 1)
+lecture = Lecturer.create(email: "lecture_01@dtu.edu.com", hashed_password: password_lecturer, role: 0)
+Lecturer.create(email: "lecture_02@dtu.edu.com", hashed_password: password_lecturer, role: 2)
+Lecturer.create(email: "admin@dtu.edu.com", hashed_password: password_lecturer, role: 3)
 
 # Create event
 (1..10).to_a.each do |index|
