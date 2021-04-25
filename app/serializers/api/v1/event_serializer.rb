@@ -3,6 +3,7 @@
 class Api::V1::EventSerializer < ActiveModel::Serializer
   attributes \
     :uid,
+    :event_name,
     :type_event,
     :size,
     :organization,
