@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class Api::V1::EventController < ApplicationController
-  before_action :check_role_creator, only: [:create]
-
   def index
     event = Api::Event::FilterEvent.new(
       { type: params[:type] }
@@ -26,28 +24,9 @@ class Api::V1::EventController < ApplicationController
     render json: response_hash
   end
 
-  def create
-    @current_user.events.create(params_event_create)
-
-    head :created
-  end
-
   def show
     event = Event.find(params[:uid])
 
     render json: event, serializer: Api::V1::EventSerializer, current_user: @current_user
   end
-
-  private
-    def params_event_create
-      params.require(:event).permit(
-        :type_event,
-        :size,
-        :organization,
-        :description,
-        :status,
-        :start_at,
-        :end_at
-      )
-    end
 end
