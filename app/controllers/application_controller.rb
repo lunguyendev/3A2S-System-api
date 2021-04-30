@@ -8,10 +8,4 @@ class ApplicationController < ActionController::API
     def authorize_request
       @current_user ||= Auth::Authorization.new(request.headers).execute
     end
-
-    def check_role_creator
-      return if @current_user.creator? || @current_user.admin? || @current_user.approval?
-
-      raise Errors::ExceptionHandler::PermissionDenied, I18n.t("errors.permission_denied")
-    end
 end

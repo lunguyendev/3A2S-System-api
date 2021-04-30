@@ -12,21 +12,21 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :event, only: [:index, :create, :show], param: :uid do
+      resources :event, only: [:index, :show], param: :uid do
         member do
           get :join_event
         end
 
-        resources :token, only: [:create], module: :event do
+        resources :token, only: [], module: :event do
           collection do
             get :qr_code
           end
         end
 
         resources :take_part_in_event, only: [:create], module: :event do
-          collection do
-            get :list_attendance
-          end
+          # collection do
+          #   get :list_attendance
+          # end
         end
       end
 
@@ -42,6 +42,17 @@ Rails.application.routes.draw do
             patch :approve_event
             patch :cancel_event
           end
+        end
+      end
+
+      scope module: :creator do
+        resources :event, only: [:create], param: :uid do
+          resources :take_part_in_event, only: [], module: :event do
+            collection do
+              get :list_attendance
+            end
+          end
+          resources :token, only: [:create], module: :event
         end
       end
     end
