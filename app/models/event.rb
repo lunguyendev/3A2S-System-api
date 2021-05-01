@@ -9,4 +9,5 @@ class Event < ApplicationRecord
   scope :created_at_desc, -> { order created_at: :desc }
   scope :organized, -> { where("end_at < ?", DateTime.now) }
   scope :organizing, -> { where("end_at >= ?", DateTime.now) }
+  scope :joined_event, -> (events){ where("uid IN (?)",events) }
 end
