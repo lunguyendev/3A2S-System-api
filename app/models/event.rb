@@ -7,4 +7,6 @@ class Event < ApplicationRecord
   enum status: %i(pending cancel accept)
 
   scope :created_at_desc, -> { order created_at: :desc }
+  scope :organized, -> { where("end_at < ?", DateTime.now) }
+  scope :organizing, -> { where("end_at >= ?", DateTime.now) }
 end
