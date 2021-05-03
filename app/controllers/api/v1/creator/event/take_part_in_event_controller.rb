@@ -8,6 +8,7 @@ class Api::V1::Creator::Event::TakePartInEventController < CreatorController
     users_serializable = ActiveModelSerializers::SerializableResource.new(
       list_user,
       each_serializer: Api::V1::User::ListAttendanceSerializer,
+      event:  event.uid
     )
     response_hash = {
       data: users_serializable,
