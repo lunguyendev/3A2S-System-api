@@ -1,3 +1,4 @@
 en:
   message_response:
     event_updated: "Event này đã được xử lý, vui lòng kiểm tra lại "
+    account_inactived: "Tài khoản đã bị vô hiệu hóa"

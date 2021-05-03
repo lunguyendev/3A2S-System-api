@@ -11,6 +11,10 @@ class Api::V1::UserController < ApplicationController
       return
     end
 
+    unless authenticator.authenticated_user.actived?
+      return render json: { message: I18n.t("message_response.account_inactived") }, status: :unauthorized
+    end
+
     render json: authenticator.authenticated_user, serializer: Api::V1::User::LoginSerializer
   end
 

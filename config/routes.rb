@@ -45,6 +45,18 @@ Rails.application.routes.draw do
         end
       end
 
+      namespace :admin do
+        resources :user, only: [:index], param: :uid do
+          member do
+            get :ban
+            get :unban
+            get :creator
+            get :approval
+            get :staff
+          end
+        end
+      end
+
       scope module: :creator do
         resources :event, only: [:create], param: :uid do
           collection do
