@@ -12,6 +12,7 @@ Rails.application.routes.draw do
         end
       end
 
+      get "get_type_event", to: "event#get_type_event"
       resources :event, only: [:index, :show], param: :uid do
         collection do
           get :joined_event
