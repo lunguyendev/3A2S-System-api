@@ -8,6 +8,7 @@ class Api::V1::EventSerializer < ActiveModel::Serializer
     :size,
     :organization,
     :description,
+    :location,
     :status,
     :start_at,
     :end_at
@@ -16,6 +17,7 @@ class Api::V1::EventSerializer < ActiveModel::Serializer
 
   attribute :creator_event
   attribute :join_event
+  attribute :count_join_event
 
   def initialize(object, options = {})
     @current_user = options[:current_user]
@@ -40,5 +42,9 @@ class Api::V1::EventSerializer < ActiveModel::Serializer
       uid: join_event&.uid,
       is_join_event: join_event.present?
     }
+  end
+
+  def count_join_event
+    TakePartInEvent.where(event_uid: object.uid).count
   end
 end

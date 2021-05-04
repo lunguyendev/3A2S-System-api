@@ -30,5 +30,4 @@ class Api::V1::User::ListAttendanceSerializer < ActiveModel::Serializer
       user_uid: object.uid
     )
   end
-
 end
