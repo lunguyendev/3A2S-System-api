@@ -7,13 +7,24 @@ class Api::Event::Management::FilterEvent
   end
 
   def execute
-    case type
-    when "organized"
-      user.events.accept.organized.created_at_desc
-    when "organizing"
-      user.events.accept.organizing.created_at_desc
+    if user.admin?
+      case type
+      when "organized"
+        Event.accept.organized.created_at_desc
+      when "organizing"
+        Event.accept.organizing.created_at_desc
+      else
+        raise Errors::ExceptionHandler::InvalidAction
+      end
     else
-      raise Errors::ExceptionHandler::InvalidAction
+      case type
+      when "organized"
+        user.events.accept.organized.created_at_desc
+      when "organizing"
+        user.events.accept.organizing.created_at_desc
+      else
+        raise Errors::ExceptionHandler::InvalidAction
+      end
     end
   end
 
