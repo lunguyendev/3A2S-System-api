@@ -34,10 +34,10 @@ class Api::V1::Admin::UserController < AdminController
     head :accepted
   end
 
-  def staff
-    raise Errors::ExceptionHandler::InvalidAction if target_user.staff?
+  def basic
+    raise Errors::ExceptionHandler::InvalidAction if target_user.basic?
 
-    target_user.staff!
+    target_user.basic!
     head :accepted
   end
 

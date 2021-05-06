@@ -53,7 +53,7 @@ Rails.application.routes.draw do
             get :unban
             get :creator
             get :approval
-            get :staff
+            get :basic
           end
         end
       end
