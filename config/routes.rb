@@ -47,7 +47,7 @@ Rails.application.routes.draw do
       end
 
       namespace :admin do
-        resources :user, only: [:index], param: :uid do
+        resources :user, only: [:index, :create], param: :uid do
           member do
             get :ban
             get :unban
