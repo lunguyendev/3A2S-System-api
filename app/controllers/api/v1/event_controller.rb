@@ -52,12 +52,50 @@ class Api::V1::EventController < ApplicationController
   end
 
   def get_type_event
-    render json: {data: type_event}
+    render json: { data: type_event }
+  end
+
+  def update
+    if target_event.pending? && @current_user.uid == target_event.user_uid ||
+      @current_user.admin? || @current_user.approval?
+      target_event.update!(params_event_update)
+      return head :accepted
+    end
+
+    raise Errors::ExceptionHandler::PermissionDenied, I18n.t("errors.permission_denied")
+  end
+
+  def destroy
+    if target_event.pending? && @current_user.uid == target_event.user_uid ||
+      @current_user.admin? || @current_user.approval?
+      target_event.destroy!
+      return head :accepted
+    end
+
+    raise Errors::ExceptionHandler::PermissionDenied, I18n.t("errors.permission_denied")
   end
 
   private
     def events_join
       @current_user.take_part_in_events.pluck(:event_uid)
+    end
+
+    def target_event
+      @event ||= Event.find(params[:uid])
+    end
+
+    def params_event_update
+      params.require(:event).permit(
+        :name,
+        :type_event,
+        :size,
+        :organization,
+        :description,
+        :location,
+        :status,
+        :start_at,
+        :end_at
+      )
     end
 
     def type_event

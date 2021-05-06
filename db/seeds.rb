@@ -16,6 +16,7 @@ lecture = Lecturer.create(email: "lecture_01@dtu.edu.com", hashed_password: pass
 Lecturer.create(email: "lecture_02@dtu.edu.com", hashed_password: password_lecturer, role: 2)
 Lecturer.create(email: "admin@dtu.edu.com", hashed_password: password_lecturer, role: 3)
 
+User.update_all(status: "actived")
 # Create event
 (1..10).to_a.each do |index|
   param_event = {
