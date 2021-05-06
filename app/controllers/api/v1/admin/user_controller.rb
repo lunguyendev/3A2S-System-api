@@ -7,9 +7,9 @@ class Api::V1::Admin::UserController < AdminController
   end
 
   def ban
-    raise Errors::ExceptionHandler::InvalidAction if target_user.in_actived?
+    raise Errors::ExceptionHandler::InvalidAction if target_user.inactived?
 
-    target_user.in_actived!
+    target_user.inactived!
     head :accepted
   end
 
