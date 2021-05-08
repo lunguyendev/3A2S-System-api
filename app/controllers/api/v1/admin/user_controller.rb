@@ -3,7 +3,7 @@
 class Api::V1::Admin::UserController < AdminController
   include Util::Generation
   def index
-    users = User.all
+    users = User.not_admin
     render json: users, each_serializer: Api::V1::Admin::UserSerializer
   end
 
