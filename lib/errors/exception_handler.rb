@@ -7,6 +7,7 @@ module Errors::ExceptionHandler
   class MissingToken < StandardError; end
   class InvalidToken < StandardError; end
   class InvalidAction < StandardError; end
+  class ExecuteFail < StandardError; end
 
   included do
     rescue_from ActiveRecord::RecordInvalid, with: :four_twenty_two
@@ -16,6 +17,7 @@ module Errors::ExceptionHandler
     rescue_from Errors::ExceptionHandler::InvalidToken, with: :four_twenty_two
     rescue_from JWT::ExpiredSignature, with: :four_twenty_two
     rescue_from Errors::ExceptionHandler::InvalidAction, with: :bad_request
+    rescue_from Errors::ExceptionHandler::ExecuteFail, with: :not_implemented
 
     rescue_from ActiveRecord::RecordNotFound do |e|
       render json: { message: e.message }, status: :not_found

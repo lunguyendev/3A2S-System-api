@@ -3,3 +3,4 @@ en:
     invalid_token: "Token không hợp lệ"
     missing_token: "Không tồn tại token"
     permission_denied: "Bạn không có quyền thực thi hành động này"
+    execute_fail: "Quá trình thực hiện thất bại"
