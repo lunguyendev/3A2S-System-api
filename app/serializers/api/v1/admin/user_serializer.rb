@@ -11,5 +11,6 @@ class Api::V1::Admin::UserSerializer < ActiveModel::Serializer
     :class_activity,
     :id_student,
     :id_lecturer,
-    :role
+    :role,
+    :avatar
 end

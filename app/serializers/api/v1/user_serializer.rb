@@ -4,5 +4,6 @@ class Api::V1::UserSerializer < ActiveModel::Serializer
   attributes \
     :uid,
     :email,
-    :type
+    :type,
+    :avatar
 end

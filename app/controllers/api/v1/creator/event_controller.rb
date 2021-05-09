@@ -36,13 +36,13 @@ class Api::V1::Creator::EventController < CreatorController
   private
     def params_event_create
       params.require(:event).permit(
-        :name,
+        :event_name,
+        :avatar,
         :type_event,
         :size,
         :organization,
         :description,
         :location,
-        :status,
         :start_at,
         :end_at
       )
