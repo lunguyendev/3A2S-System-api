@@ -70,6 +70,9 @@ Rails.application.routes.draw do
             end
           end
           resources :token, only: [:create], module: :event
+          resources :template_feedback, only: [:create], module: :event do
+            resources :question, only: [:index, :create]
+          end
         end
       end
     end
