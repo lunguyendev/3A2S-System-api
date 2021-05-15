@@ -25,11 +25,9 @@ Rails.application.routes.draw do
           end
         end
 
-        resources :take_part_in_event, only: [:create], module: :event do
-          # collection do
-          #   get :list_attendance
-          # end
-        end
+        resources :take_part_in_event, only: [:create], module: :event
+
+        resources :answer, only: [:create], module: :event
       end
 
       resources :tokens, only: [], param: :token_string do
