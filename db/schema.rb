@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_09_050803) do
+ActiveRecord::Schema.define(version: 2021_05_11_163503) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "answers", primary_key: "uid", id: :string, force: :cascade do |t|
+    t.integer "scope"
+    t.string "comment"
+    t.string "question_uid"
+    t.string "user_uid"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["uid"], name: "index_answers_on_uid", unique: true
+  end
 
   create_table "events", primary_key: "uid", id: :string, force: :cascade do |t|
     t.string "user_uid"
@@ -32,6 +42,15 @@ ActiveRecord::Schema.define(version: 2021_05_09_050803) do
     t.index ["uid"], name: "index_events_on_uid", unique: true
   end
 
+  create_table "questions", primary_key: "uid", id: :string, force: :cascade do |t|
+    t.string "template_feedback_uid"
+    t.boolean "is_rating"
+    t.string "content"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["uid"], name: "index_questions_on_uid", unique: true
+  end
+
   create_table "take_part_in_events", primary_key: "uid", id: :string, force: :cascade do |t|
     t.string "user_uid"
     t.string "event_uid"
@@ -39,6 +58,16 @@ ActiveRecord::Schema.define(version: 2021_05_09_050803) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["uid"], name: "index_take_part_in_events_on_uid", unique: true
+  end
+
+  create_table "template_feedbacks", primary_key: "uid", id: :string, force: :cascade do |t|
+    t.boolean "is_online"
+    t.string "sheet_id"
+    t.string "name_sheet"
+    t.string "event_uid"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["uid"], name: "index_template_feedbacks_on_uid", unique: true
   end
 
   create_table "tokens", force: :cascade do |t|
@@ -73,7 +102,11 @@ ActiveRecord::Schema.define(version: 2021_05_09_050803) do
     t.index ["uid"], name: "index_users_on_uid", unique: true
   end
 
+  add_foreign_key "answers", "questions", column: "question_uid", primary_key: "uid", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "answers", "users", column: "user_uid", primary_key: "uid", on_update: :cascade, on_delete: :cascade
   add_foreign_key "events", "users", column: "user_uid", primary_key: "uid", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "questions", "template_feedbacks", column: "template_feedback_uid", primary_key: "uid", on_update: :cascade, on_delete: :cascade
   add_foreign_key "take_part_in_events", "events", column: "event_uid", primary_key: "uid", on_update: :cascade, on_delete: :cascade
   add_foreign_key "take_part_in_events", "users", column: "user_uid", primary_key: "uid", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "template_feedbacks", "events", column: "event_uid", primary_key: "uid", on_update: :cascade, on_delete: :cascade
 end

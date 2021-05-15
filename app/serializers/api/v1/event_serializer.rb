@@ -15,6 +15,7 @@ class Api::V1::EventSerializer < ActiveModel::Serializer
     :end_at
 
   belongs_to :user, serializer: Api::V1::UserSerializer
+  has_one :template_feedback, serializer: Api::V1::TemplateFeedbackSerializer
 
   attribute :creator_event
   attribute :join_event
