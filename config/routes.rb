@@ -71,6 +71,7 @@ Rails.application.routes.draw do
           resources :template_feedback, only: [:create], module: :event do
             resources :question, only: [:index, :create]
           end
+          resources :statistical, only: [:index], module: :event
         end
       end
     end
