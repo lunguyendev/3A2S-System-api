@@ -18,7 +18,7 @@ class Api::V1::Event::AnswerController < ApplicationController
         user_uid: @current_user.uid
       )
       unless attendance_event&.presence? &&
-         Question.answer_by_template(target_event.template_feedback&.uid).empty?
+             Question.answer_by_template(target_event.template_feedback&.uid, @current_user.uid).empty?
         raise Errors::ExceptionHandler::InvalidAction
       end
     end
