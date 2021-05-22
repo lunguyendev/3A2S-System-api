@@ -6,7 +6,7 @@ class Api::V1::EventController < ApplicationController
       { type: params[:type] }
     ).execute
 
-    @collection_event = Kaminari.paginate_array(event).page(params[:page]).per(10)
+    @collection_event = Kaminari.paginate_array(event).page(params[:page]).per(params[:size_page] || 10)
 
     event_serializable = ActiveModelSerializers::SerializableResource.new(
       @collection_event,
