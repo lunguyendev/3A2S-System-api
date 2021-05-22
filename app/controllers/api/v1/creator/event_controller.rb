@@ -2,8 +2,8 @@
 
 class Api::V1::Creator::EventController < CreatorController
   def create
-    @current_user.events.create(params_event_create)
-
+    event = @current_user.events.create(params_event_create)
+    GoogleCalendar::Create.new(event, @current_user).execute if params_event_create[:is_online]
     head :created
   end
 
@@ -33,18 +33,25 @@ class Api::V1::Creator::EventController < CreatorController
     render json: response_hash
   end
 
+  def generate_meeting
+    event = Event.find(params[:uid])
+    GoogleCalendar::CreateMeet.new(event.calendar.id_calendar).execute
+    head :created
+  end
+
   private
     def params_event_create
       params.require(:event).permit(
         :event_name,
         :avatar,
-        :type_event,
+        :is_online,
         :size,
         :organization,
         :description,
         :location,
         :start_at,
-        :end_at
+        :end_at,
+        type_event_uids: []
       )
     end
 end

@@ -59,6 +59,9 @@ Rails.application.routes.draw do
 
       scope module: :creator do
         resources :event, only: [:create], param: :uid do
+          member do
+            get :generate_meeting
+          end
           collection do
             get "management/list_event", to: "event#index"
           end

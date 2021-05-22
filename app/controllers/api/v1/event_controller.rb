@@ -52,7 +52,8 @@ class Api::V1::EventController < ApplicationController
   end
 
   def get_type_event
-    render json: { data: type_event }
+    type = TypeEvent.all
+    render json: { type_event: type }
   end
 
   def update
@@ -96,54 +97,5 @@ class Api::V1::EventController < ApplicationController
         :start_at,
         :end_at
       )
-    end
-
-    def type_event
-      [
-        {
-          id: 1,
-          type: "Công nghệ"
-        },
-        {
-          id: 2,
-          type: "Du lịch"
-        },
-        {
-          id: 3,
-          type: "Kinh tế"
-        },
-        {
-          id: 4,
-          type: "Văn hóa"
-        },
-        {
-          id: 5,
-          type: "Hội Thảo"
-        },
-        {
-          id: 6,
-          type: "Tuyển dụng"
-        },
-        {
-          id: 7,
-          type: "Giải trí"
-        },
-        {
-          id: 8,
-          type: "Thi đấu"
-        },
-        {
-          id: 9,
-          type: "Kiến trúc"
-        },
-        {
-          id: 10,
-          type: "Sức khỏe"
-        },
-        {
-          id: 11,
-          type: "Khác"
-        }
-      ]
     end
 end

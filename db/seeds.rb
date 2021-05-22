@@ -21,7 +21,7 @@ User.update_all(status: "actived")
 (1..10).to_a.each do |index|
   param_event = {
     event_name: "Sự kiện " + Faker::Job.title,
-    type_event: (1..7).to_a.sample,
+    # type_event: (1..7).to_a.sample,
     size: [100, 200, 500, 700, 1000].sample,
     organization: Faker::Company.name,
     description: Faker::Lorem.paragraph_by_chars,

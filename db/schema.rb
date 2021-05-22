@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_11_163503) do
+ActiveRecord::Schema.define(version: 2021_05_22_102556) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,9 +25,18 @@ ActiveRecord::Schema.define(version: 2021_05_11_163503) do
     t.index ["uid"], name: "index_answers_on_uid", unique: true
   end
 
+  create_table "calendars", primary_key: "uid", id: :string, force: :cascade do |t|
+    t.string "id_calendar"
+    t.string "meet_url"
+    t.string "event_uid"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["event_uid"], name: "index_calendars_on_event_uid", unique: true
+    t.index ["uid"], name: "index_calendars_on_uid", unique: true
+  end
+
   create_table "events", primary_key: "uid", id: :string, force: :cascade do |t|
     t.string "user_uid"
-    t.integer "type_event"
     t.integer "size"
     t.string "organization"
     t.string "description"
@@ -39,6 +48,8 @@ ActiveRecord::Schema.define(version: 2021_05_11_163503) do
     t.string "event_name"
     t.string "location"
     t.string "avatar"
+    t.string "type_event_uids", array: true
+    t.boolean "is_online"
     t.index ["uid"], name: "index_events_on_uid", unique: true
   end
 
@@ -82,6 +93,14 @@ ActiveRecord::Schema.define(version: 2021_05_11_163503) do
     t.index ["qr_code_string"], name: "index_tokens_on_qr_code_string", unique: true
   end
 
+  create_table "type_events", primary_key: "uid", id: :string, force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_type_events_on_name", unique: true
+    t.index ["uid"], name: "index_type_events_on_uid", unique: true
+  end
+
   create_table "users", primary_key: "uid", id: :string, force: :cascade do |t|
     t.string "name"
     t.string "type"
@@ -104,6 +123,7 @@ ActiveRecord::Schema.define(version: 2021_05_11_163503) do
 
   add_foreign_key "answers", "questions", column: "question_uid", primary_key: "uid", on_update: :cascade, on_delete: :cascade
   add_foreign_key "answers", "users", column: "user_uid", primary_key: "uid", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "calendars", "events", column: "event_uid", primary_key: "uid", on_update: :cascade, on_delete: :cascade
   add_foreign_key "events", "users", column: "user_uid", primary_key: "uid", on_update: :cascade, on_delete: :cascade
   add_foreign_key "questions", "template_feedbacks", column: "template_feedback_uid", primary_key: "uid", on_update: :cascade, on_delete: :cascade
   add_foreign_key "take_part_in_events", "events", column: "event_uid", primary_key: "uid", on_update: :cascade, on_delete: :cascade
