@@ -21,8 +21,33 @@ class Api::V1::Creator::Event::TakePartInEventController < CreatorController
     render json: response_hash
   end
 
+  def attendance
+    raise Errors::ExceptionHandler::InvalidAction if take_part_in_event&.presence?
+
+    unless @attendance = take_part_in_event.presence
+      @attendance = Api::Event::JoinerEvent.new(
+        event_uid: target_event.uid,
+        user_uid: target_user.uid
+      ).execute
+    end
+
+    @attendance.presence!
+    head :created
+  end
+
   private
+    def take_part_in_event
+      @attendance = target_event.take_part_in_events.find_by(user_uid: target_user)
+    end
+
     def target_event
-      Event.find(params[:event_uid])
+      @event ||= Event.find(params[:event_uid])
+    end
+
+    def target_user
+      @user ||= User.find_by(email: params[:email])
+
+      raise Errors::ExceptionHandler::InvalidAction unless @user.present?
+      @user
     end
 end
