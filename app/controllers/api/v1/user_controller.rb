@@ -26,6 +26,10 @@ class Api::V1::UserController < ApplicationController
     render json: { role: @current_user.role }
   end
 
+  def profile
+    render json: @current_user, each_serializer: Api::V1::UserSerializer
+  end
+
   private
     def auth_params
       params.permit(:email, :password)

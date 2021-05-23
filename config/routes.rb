@@ -10,6 +10,7 @@ Rails.application.routes.draw do
           post :login
           get :logout
           get :ping_role
+          get :profile
         end
       end
 
