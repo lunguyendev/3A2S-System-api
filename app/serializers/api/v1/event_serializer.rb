@@ -43,9 +43,10 @@ class Api::V1::EventSerializer < ActiveModel::Serializer
     return unless @current_user
 
     join_event = @current_user.take_part_in_events.find_by(event_uid: object.uid)
+    is_join_event = join_event.present? && join_event.status != "cancel" ? true : false 
     {
       uid: join_event&.uid,
-      is_join_event: join_event.present?,
+      is_join_event: is_join_event,
       attendance: join_event&.presence? || false
     }
   end
