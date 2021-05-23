@@ -25,7 +25,11 @@ Rails.application.routes.draw do
           end
         end
 
-        resources :take_part_in_event, only: [:create], module: :event
+        resources :take_part_in_event, only: [:create], module: :event do
+          collection do
+            post :cancel
+          end
+        end
 
         resources :answer, only: [:create], module: :event
       end
