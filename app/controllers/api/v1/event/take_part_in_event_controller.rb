@@ -8,8 +8,15 @@ class Api::V1::Event::TakePartInEventController < ApplicationController
       user_uid: @current_user.uid
     ).execute
 
-    GoogleCalendar::AddEmail.new(@event.calendar.id_calendar, @current_user.email).execute if @event.is_online
     head :created
+  end
+
+  def cancel
+    @attendance = target_event.take_part_in_events.find_by(user_uid: @current_user.uid)
+    raise Errors::ExceptionHandler::InvalidAction unless @attendance.present?
+
+    @attendance.cancel!
+    head :accepted
   end
 
   private
