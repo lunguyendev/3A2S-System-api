@@ -63,6 +63,7 @@ Rails.application.routes.draw do
       end
 
       scope module: :creator do
+        resources :user, only: [:index], param: :uid
         resources :event, only: [:create], param: :uid do
           member do
             get :generate_meeting
