@@ -2,6 +2,6 @@
 
 class Api::V1::Creator::UserController < ApplicationController
   def index
-    render json: User.basic.pluck(:email)
+    render json: User.basic.actived.pluck(:email)
   end
 end

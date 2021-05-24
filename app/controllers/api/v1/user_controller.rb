@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class Api::V1::UserController < ApplicationController
-  skip_before_action :authorize_request, only: :login
+  include Util::Generation
+  skip_before_action :authorize_request, only: [:login, :change_password]
 
   def login
     authenticator = Auth::Authentication.new(auth_params[:email], auth_params[:password])
@@ -30,8 +31,29 @@ class Api::V1::UserController < ApplicationController
     render json: @current_user, each_serializer: Api::V1::UserSerializer
   end
 
+  def change_password
+    user = User.find(token_valid.qr_code_id)
+    password_user = generate_hash_password(change_password_params[:password])
+    ApplicationRecord.transaction do
+      user.update_attributes!(hashed_password: password_user, status: "actived", role: "creator")
+      token_valid.destroy!
+    end
+  end
+
+
   private
     def auth_params
       params.permit(:email, :password)
+    end
+
+    def token_valid
+      return @token if @token = Token.find_by(qr_code_string: change_password_params[:token])
+
+      raise Errors::ExceptionHandler::InvalidToken
+    end
+
+    def change_password_params
+      params.require(:change_password)
+            .permit(:token, :password)
     end
 end

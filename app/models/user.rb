@@ -8,4 +8,8 @@ class User < ApplicationRecord
   enum role: %i(basic creator approval admin)
 
   scope :users_by_ids, ->(ids) { where("uid IN (?)", ids) }
+  validates :phone, uniqueness: true, allow_blank: true
+  validates :email, uniqueness: true, allow_blank: false
+  validates :id_student, uniqueness: true, allow_blank: true
+  validates :id_lecturer, uniqueness: true, allow_blank: true
 end
