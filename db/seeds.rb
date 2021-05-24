@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+
 
 include Util::Generation
 
@@ -17,6 +17,21 @@ Lecturer.create(email: "lecture_02@dtu.edu.com", hashed_password: password_lectu
 Lecturer.create(email: "admin@dtu.edu.com", hashed_password: password_lecturer, role: 3)
 
 User.update_all(status: "actived")
+
+# Type event
+TypeEvent.create(name: "Công nghệ")
+TypeEvent.create(name: "Kinh tế")
+TypeEvent.create(name: "Văn hóa")
+TypeEvent.create(name: "Hội Thảo")
+TypeEvent.create(name: "Tuyển dụng")
+TypeEvent.create(name: "Giải trí")
+TypeEvent.create(name: "Thi đấu")
+TypeEvent.create(name: "Kiến trúc")
+TypeEvent.create(name: "Sức khỏe")
+TypeEvent.create(name: "Ngoại Ngữ")
+TypeEvent.create(name: "Nghệ Thuật")
+TypeEvent.create(name: "Khác")
+
 # Create event
 (1..10).to_a.each do |index|
   param_event = {
@@ -43,7 +58,6 @@ TakePartInEvent.create(
   user_uid: student.uid,
   event_uid: event.uid
 )
-
 # Generation Token Code
 Token.create(qr_code: event, expired_at: Time.now + 2.hours)
 

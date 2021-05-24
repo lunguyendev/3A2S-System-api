@@ -11,6 +11,7 @@ Rails.application.routes.draw do
           get :logout
           get :ping_role
           get :profile
+          post :change_password
         end
       end
 

@@ -3,7 +3,7 @@
 class Api::V1::Admin::UserController < AdminController
   include Util::Generation
   def index
-    users = User.not_admin
+    users = User.not_admin.order("email ASC")
     render json: users, each_serializer: Api::V1::Admin::UserSerializer
   end
 
@@ -43,12 +43,10 @@ class Api::V1::Admin::UserController < AdminController
   end
 
   def create
-    enterprise = Enterprise.create(params_user)
-    password = generate_token
-    password_user = generate_hash_password(generate_token)
-    enterprise.update_attributes(hashed_password: password_user, status: "newer")
+    enterprise = Enterprise.create!(params_user)
+    token = enterprise.create_token
 
-    render json: { password: password }, status: :created
+    render json: { token: token.qr_code_string }, status: :created
   end
 
   private
