@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_22_102556) do
+ActiveRecord::Schema.define(version: 2021_05_24_155821) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,6 +50,9 @@ ActiveRecord::Schema.define(version: 2021_05_22_102556) do
     t.string "avatar"
     t.string "type_event_uids", array: true
     t.boolean "is_online"
+    t.integer "scope", default: 0
+    t.string "handel_by"
+    t.integer "number_attandance", default: 0
     t.index ["uid"], name: "index_events_on_uid", unique: true
   end
 

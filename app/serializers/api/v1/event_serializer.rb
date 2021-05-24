@@ -12,6 +12,8 @@ class Api::V1::EventSerializer < ActiveModel::Serializer
     :description,
     :location,
     :status,
+    :scope,
+    :handel_by,
     :start_at,
     :end_at
 
