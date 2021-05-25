@@ -7,7 +7,7 @@ class Api::Event::Management::FilterEvent
   end
 
   def execute
-    if user.admin?
+    if user.admin? || user.approval?
       case type
       when "organized"
         Event.accept.organized.created_at_desc

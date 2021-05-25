@@ -40,6 +40,11 @@ class Api::V1::UserController < ApplicationController
     end
   end
 
+  def search_email
+    users = User.not_admin.where("email LIKE ?", "%#{params[:search]}%").order("email ASC")
+
+    render json: users, each_serializer: Api::V1::Admin::UserSerializer
+  end
 
   private
     def auth_params

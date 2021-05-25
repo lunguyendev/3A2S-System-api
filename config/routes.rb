@@ -12,6 +12,7 @@ Rails.application.routes.draw do
           get :ping_role
           get :profile
           post :change_password
+          get :search_email
         end
       end
 
@@ -20,6 +21,8 @@ Rails.application.routes.draw do
         collection do
           get :joined_event
           get :list
+          get :search_name_basic
+          get :search_name
         end
 
         resources :token, only: [], module: :event do

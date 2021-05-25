@@ -99,6 +99,52 @@ class Api::V1::EventController < ApplicationController
     raise Errors::ExceptionHandler::PermissionDenied, I18n.t("errors.permission_denied")
   end
 
+  def search_name_basic
+    events = Event.accept.where("event_name LIKE ?", "%#{ params[:search] }%").created_at_desc
+
+    @collection_event = Kaminari.paginate_array(events).page(params[:page]).per(10)
+
+    event_serializable = ActiveModelSerializers::SerializableResource.new(
+      @collection_event,
+      each_serializer: Api::V1::EventSerializer,
+      current_user: @current_user
+    )
+
+    response_hash = {
+      data: event_serializable,
+      total_page: @collection_event.total_pages,
+      current_page: @collection_event.current_page,
+      total_count: events.count
+    }
+
+    render json: response_hash
+  end
+
+  def search_name
+    if @current_user.admin? || @current_user.approval?
+      events = Event.where("event_name LIKE ?", "% #{ params[:search] }%").created_at_desc
+    else
+      events = @current_user.events.where("event_name LIKE ?", "%#{params[:search]}%").created_at_desc
+    end
+
+    @collection_event = Kaminari.paginate_array(events).page(params[:page]).per(10)
+
+    event_serializable = ActiveModelSerializers::SerializableResource.new(
+      @collection_event,
+      each_serializer: Api::V1::EventSerializer,
+      current_user: @current_user
+    )
+
+    response_hash = {
+      data: event_serializable,
+      total_page: @collection_event.total_pages,
+      current_page: @collection_event.current_page,
+      total_count: events.count
+    }
+
+    render json: response_hash
+  end
+
   private
     def events_join
       @current_user.take_part_in_events.pluck(:event_uid)
