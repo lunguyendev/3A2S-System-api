@@ -34,6 +34,10 @@ Rails.application.routes.draw do
         end
 
         resources :answer, only: [:create], module: :event
+
+        resources :template_feedback, module: :event do
+          resources :question, only: [:index]
+        end
       end
 
       resources :tokens, only: [], param: :token_string do
@@ -80,7 +84,7 @@ Rails.application.routes.draw do
           end
           resources :token, only: [:create], module: :event
           resources :template_feedback, only: [:create], module: :event do
-            resources :question, only: [:index, :create]
+            resources :question, only: [:create]
           end
           resources :statistical, only: [:index], module: :event
         end

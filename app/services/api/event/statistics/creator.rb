@@ -8,6 +8,7 @@ class Api::Event::Statistics::Creator
   def execute
     {
       total: total_score,
+      total_feedback: total_feedback,
       question_rating: question_rating,
       question_comment: question_comment
     }
@@ -46,5 +47,10 @@ class Api::Event::Statistics::Creator
         question_comment << param
       end
       question_comment
+    end
+
+    def total_feedback
+      question_uids = Question.where(template_feedback_uid: template_uid).pluck(:uid)
+      Answer.count_feedback(question_uids)
     end
 end

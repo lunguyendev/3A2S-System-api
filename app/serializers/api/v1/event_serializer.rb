@@ -26,6 +26,7 @@ class Api::V1::EventSerializer < ActiveModel::Serializer
   attribute :type_event
   attribute :scope
   attribute :handel_by
+  attribute :is_close
 
   def initialize(object, options = {})
     @current_user = options[:current_user]
@@ -73,5 +74,11 @@ class Api::V1::EventSerializer < ActiveModel::Serializer
       type_name << TypeEvent.find_by(uid: uid)&.name
     end
     type_name
+  end
+
+  def is_close
+    return true if object.end_at < DateTime.current
+
+    false
   end
 end
