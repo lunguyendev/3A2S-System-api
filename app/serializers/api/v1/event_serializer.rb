@@ -12,7 +12,6 @@ class Api::V1::EventSerializer < ActiveModel::Serializer
     :description,
     :location,
     :status,
-    :scope,
     :handel_by,
     :start_at,
     :end_at
@@ -25,6 +24,8 @@ class Api::V1::EventSerializer < ActiveModel::Serializer
   attribute :join_event
   attribute :count_join_event
   attribute :type_event
+  attribute :scope
+  attribute :handel_by
 
   def initialize(object, options = {})
     @current_user = options[:current_user]
@@ -39,6 +40,14 @@ class Api::V1::EventSerializer < ActiveModel::Serializer
       is_qr_code: object.token.present?,
       qr_code_string: object.token&.qr_code_string
     }
+  end
+
+  def scope
+    object.scope
+  end
+
+  def handel_by
+    object.handel_by
   end
 
   def join_event
