@@ -19,6 +19,7 @@ Rails.application.routes.draw do
       resources :event, only: [:index, :show, :update, :destroy], param: :uid do
         collection do
           get :joined_event
+          get :list
         end
 
         resources :token, only: [], module: :event do
