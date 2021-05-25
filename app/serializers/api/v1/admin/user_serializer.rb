@@ -8,6 +8,7 @@ class Api::V1::Admin::UserSerializer < ActiveModel::Serializer
     :type,
     :status,
     :gender,
+    :phone,
     :class_activity,
     :id_student,
     :id_lecturer,

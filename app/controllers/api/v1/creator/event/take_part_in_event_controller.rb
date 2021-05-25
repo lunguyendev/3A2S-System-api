@@ -10,12 +10,19 @@ class Api::V1::Creator::Event::TakePartInEventController < CreatorController
       each_serializer: Api::V1::User::ListAttendanceSerializer,
       event:  event.uid
     )
+
+    count_attendance = target_event.take_part_in_events.presence.count
+    count_join = target_event.take_part_in_events.count
+    count_cancel = target_event.take_part_in_events.cancel.count
     response_hash = {
       data: users_serializable,
       event: {
         event_uid: event.uid,
         event_name: event.event_name
-      }
+      },
+      count_attendance: count_attendance,
+      count_join: count_join,
+      count_cancel: count_cancel
     }
 
     render json: response_hash
