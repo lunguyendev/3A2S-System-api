@@ -9,7 +9,7 @@ class Api::Event::JoinerEvent
   def execute
     return target_event.take_part_in_events.find_by(user_uid: user).absent! if check_cancel?
 
-    raise Errors::ExceptionHandler::InvalidAction if check_join_event?
+    raise Errors::ExceptionHandler::InvalidAction if check_join_event? && check_creator_event?
 
     attendance = target_event.take_part_in_events.create(user_uid: user)
     GoogleCalendar::AddEmail.new(target_event.calendar.id_calendar, target_user.email).execute if target_event.is_online
@@ -29,6 +29,12 @@ class Api::Event::JoinerEvent
 
     def check_join_event?
       return true if target_event.take_part_in_events.find_by(user_uid: user)
+
+      false
+    end
+
+    def check_creator_event?
+      return true if target_event.user_uid === user
 
       false
     end

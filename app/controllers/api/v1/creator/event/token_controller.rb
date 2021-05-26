@@ -16,7 +16,7 @@ class Api::V1::Creator::Event::TokenController < CreatorController
 
   private
     def check_creator_event?
-      return true if target_event.user_uid === @current_user.uid
+      return true if target_event.user_uid === @current_user.uid || @current_user.admin?
 
       false
     end

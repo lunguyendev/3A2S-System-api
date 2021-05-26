@@ -64,7 +64,7 @@ class Api::V1::EventSerializer < ActiveModel::Serializer
   end
 
   def count_join_event
-    TakePartInEvent.where(event_uid: object.uid).count
+    TakePartInEvent.where(event_uid: object.uid).not_cancel.count
   end
 
   def type_event

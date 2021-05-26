@@ -43,7 +43,7 @@ class Api::V1::Admin::UserController < AdminController
   end
 
   def create
-    enterprise = Enterprise.create!(params_user)
+    enterprise = Enterprise.create!(params_user.merge(status: "inactived"))
     token = enterprise.create_token
 
     render json: { token: token.qr_code_string }, status: :created
