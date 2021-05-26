@@ -19,13 +19,13 @@ class Api::Event::FilterEvent
     def creator
       case type
       when "pending"
-        @current_user.events.pending.created_at_desc
+        user.events.pending.created_at_desc
       when "cancel"
-        @current_user.events.cancel.created_at_desc
+        user.events.cancel.created_at_desc
       when "accept"
-        @current_user.events.accept.created_at_desc
+        user.events.accept.created_at_desc
       else
-        @current_user.events.all.created_at_desc
+        user.events.all.created_at_desc
       end
     end
 
