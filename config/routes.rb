@@ -59,6 +59,7 @@ Rails.application.routes.draw do
           end
           collection do
             post :event_statistics
+            post :event_statistics_by_year
           end
         end
       end

@@ -5,4 +5,7 @@ class TakePartInEvent < ApplicationRecord
   belongs_to :event, foreign_key: :event_uid, primary_key: :uid
 
   enum status: %i(absent presence cancel)
+  scope :with_year_and_month, ->(year, month) {
+    where(created_at: Date.new(year, month, 1)..Date.new(year, month, -1)).count
+  }
 end

@@ -32,6 +32,11 @@ class Api::V1::Admin::EventController < AdminController
     render json: number_hash, status: :ok
   end
 
+  def event_statistics_by_year
+    data = Api::Event::Statistics::Admin.new(year_param[:year]).execute
+    render json: data, status: :ok
+  end
+
   private
     def target_event
       Event.find(params[:event_uid])
@@ -44,5 +49,9 @@ class Api::V1::Admin::EventController < AdminController
     def date_param
       params.require(:date)
             .permit(:start_at, :end_at)
+    end
+
+    def year_param
+      params.permit(:year)
     end
 end
