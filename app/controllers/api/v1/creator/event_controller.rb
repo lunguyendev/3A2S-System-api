@@ -2,11 +2,10 @@
 
 class Api::V1::Creator::EventController < CreatorController
   def create
-    ApplicationRecord.transaction do
-      event = @current_user.events.create(params_event_create)
-      event.create_template_feedback
-      event.accept! if @current_user.admin? || @current_user.approval?
-    end
+    event = @current_user.events.create(params_event_create)
+    event.create_template_feedback
+    event.accept! if @current_user.admin? || @current_user.approval?
+
     GoogleCalendar::Create.new(event, @current_user).execute if params_event_create[:is_online]
     head :created
   end

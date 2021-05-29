@@ -23,6 +23,7 @@ Rails.application.routes.draw do
           get :list
           get :search_name_basic
           get :search_name
+          post :event_comming
         end
 
         resources :token, only: [], module: :event do
@@ -56,6 +57,9 @@ Rails.application.routes.draw do
             patch :approve_event
             patch :cancel_event
           end
+          collection do
+            post :event_statistics
+          end
         end
       end
 
@@ -67,6 +71,9 @@ Rails.application.routes.draw do
             get :creator
             get :approval
             get :basic
+          end
+          collection do
+            post :count_user
           end
         end
       end

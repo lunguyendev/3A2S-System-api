@@ -24,6 +24,14 @@ class Api::V1::Admin::EventController < AdminController
     head :accepted
   end
 
+  def event_statistics
+    number = Event.count_events_by_day(date_param[:start_at], date_param[:end_at])
+    number_hash = number.map do |k, v|
+      { k.to_date => v }
+    end
+    render json: number_hash, status: :ok
+  end
+
   private
     def target_event
       Event.find(params[:event_uid])
@@ -31,5 +39,10 @@ class Api::V1::Admin::EventController < AdminController
 
     def approval_params
       params.require(:event).permit(:scope)
+    end
+
+    def date_param
+      params.require(:date)
+            .permit(:start_at, :end_at)
     end
 end

@@ -12,4 +12,6 @@ class Event < ApplicationRecord
   scope :organized, -> { where("end_at < ?", DateTime.now) }
   scope :organizing, -> { where("end_at >= ?", DateTime.now) }
   scope :joined_event, -> (events) { where("uid IN (?)", events) }
+  scope :count_events_by_day, -> (start_at, end_at) { where("created_at BETWEEN ? AND ?", start_at, end_at).group(:created_at).order(:created_at).count }
+  scope :events_by_day, -> (start_at, end_at) { where("created_at BETWEEN ? AND ?", start_at, end_at).order(:start_at) }
 end

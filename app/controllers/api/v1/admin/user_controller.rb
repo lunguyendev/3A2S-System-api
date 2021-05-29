@@ -49,6 +49,11 @@ class Api::V1::Admin::UserController < AdminController
     render json: { token: token.qr_code_string }, status: :created
   end
 
+  def count_user
+    users = User.not_admin.count
+    render json: { count_user: users }, status: :ok
+  end
+
   private
     def target_user
       @user ||= User.find(params[:uid])

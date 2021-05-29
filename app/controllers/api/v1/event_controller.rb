@@ -145,6 +145,12 @@ class Api::V1::EventController < ApplicationController
     render json: response_hash
   end
 
+  def event_comming
+    events = Event.events_by_day(date_param[:start_at], date_param[:end_at])
+
+    render json: events, each_serializer: Api::V1::EventSerializer
+  end
+
   private
     def events_join
       @current_user.take_part_in_events.pluck(:event_uid)
@@ -166,5 +172,10 @@ class Api::V1::EventController < ApplicationController
         :start_at,
         :end_at
       )
+    end
+
+    def date_param
+      params.require(:date)
+            .permit(:start_at, :end_at)
     end
 end
