@@ -26,6 +26,10 @@ module Errors::ExceptionHandler
     rescue_from ActiveRecord::RecordInvalid do |e|
       render json: { message: e.message }, status: :unprocessable_entity
     end
+
+    rescue_from Google::Apis::ClientError do |e|
+      render json: { message: I18n.t("message_response.export_excel_onl") }, status: :bad_request
+    end
   end
 
   private

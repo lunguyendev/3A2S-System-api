@@ -2,3 +2,4 @@ en:
   message_response:
     event_updated: "Event này đã được xử lý, vui lòng kiểm tra lại "
     account_inactived: "Tài khoản đã bị vô hiệu hóa"
+    export_excel_onl: "Please double check spreadsheets_key and sheet_name. Please read the instructions."
