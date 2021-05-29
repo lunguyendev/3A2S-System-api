@@ -17,6 +17,8 @@ gem "kaminari"
 gem "faker"
 gem "aws-sdk-s3"
 gem "google-api-client"
+gem "google_drive"
+gem "rails-erd"
 
 group :development, :test do
   gem "byebug", platforms: %i[mri mingw x64_mingw]

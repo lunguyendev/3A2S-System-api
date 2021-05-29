@@ -42,6 +42,17 @@ class Api::V1::Creator::Event::TakePartInEventController < CreatorController
     head :created
   end
 
+  def export_list_attendance
+    GoogleSheet::ExportListAttendance.new(
+      {
+        spreadsheet_key: spreadsheet_params[:spreadsheet_key],
+        name_sheet: spreadsheet_params[:sheet_name],
+        event: target_event
+      }
+    ).execute
+    head :created
+  end
+
   private
     def take_part_in_event
       @attendance = target_event.take_part_in_events.find_by(user_uid: target_user)
@@ -56,5 +67,10 @@ class Api::V1::Creator::Event::TakePartInEventController < CreatorController
 
       raise Errors::ExceptionHandler::InvalidAction unless @user.present?
       @user
+    end
+
+    def spreadsheet_params
+      params.require(:spreadsheet)
+            .permit(:spreadsheet_key, :sheet_name)
     end
 end

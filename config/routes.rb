@@ -84,6 +84,7 @@ Rails.application.routes.draw do
             collection do
               get :list_attendance
               post "attendance"
+              post :export_list_attendance
             end
           end
           resources :token, only: [:create], module: :event
