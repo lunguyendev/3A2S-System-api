@@ -122,9 +122,9 @@ class Api::V1::EventController < ApplicationController
 
   def search_name
     if @current_user.admin? || @current_user.approval?
-      events = Event.where("event_name LIKE ? AND status = ?", "% #{ params[:search] }%", params[:status]).created_at_desc
+      events = Event.where("event_name LIKE ? AND status = ?", "%#{ params[:search] }%", params[:status]).created_at_desc
     else
-      events = @current_user.events.where("event_name LIKE ? AND status = ?", "%#{params[:search]}% ", params[:status]).created_at_desc
+      events = @current_user.events.where("event_name LIKE ? AND status = ?", "%#{ params[:search] }%", params[:status]).created_at_desc
     end
 
     @collection_event = Kaminari.paginate_array(events).page(params[:page]).per(10)
