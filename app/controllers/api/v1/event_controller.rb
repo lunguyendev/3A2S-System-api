@@ -56,7 +56,7 @@ class Api::V1::EventController < ApplicationController
   def joined_event
     events = Event.joined_event(events_join)
 
-    @collection_event = Kaminari.paginate_array(events).page(params[:page]).per(10)
+    @collection_event = Kaminari.paginate_array(events).page(params[:page]).per(params[:size_page] || 10)
 
     event_serializable = ActiveModelSerializers::SerializableResource.new(
       @collection_event,

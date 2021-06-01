@@ -12,6 +12,7 @@ class Api::V1::User::ListAttendanceSerializer < ActiveModel::Serializer
     :id_student
 
   attribute :is_attendance
+  attribute :is_cancel
 
   def initialize(object, options = {})
     @event = options[:event]
@@ -25,7 +26,7 @@ class Api::V1::User::ListAttendanceSerializer < ActiveModel::Serializer
   end
 
   def is_cancel
-    return true if target_join_event.presence?
+    return true if target_join_event&.cancel?
 
     false
   end
