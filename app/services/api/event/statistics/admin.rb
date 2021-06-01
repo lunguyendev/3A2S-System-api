@@ -17,7 +17,7 @@ class Api::Event::Statistics::Admin
     def handle_data
       data = []
       (1..12).each do |month|
-        data << {
+        data <<
         {
             event: Event.with_year_and_month(year, month),
             join: TakePartInEvent.with_year_and_month(year, month)
