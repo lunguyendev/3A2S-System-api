@@ -45,8 +45,9 @@ class Api::V1::Admin::UserController < AdminController
   def create
     enterprise = Enterprise.create!(params_user.merge(status: "inactived"))
     token = enterprise.create_token
+    EventMailer.reset_password(enterprise.email, token.qr_code_string).deliver_later
 
-    render json: { token: token.qr_code_string }, status: :created
+    head :created
   end
 
   def count_user
