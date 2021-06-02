@@ -6,23 +6,23 @@ class Api::Event::Statistics::Admin
   end
 
   def execute
-    {
-      statistical: handle_data
-    }
+    handle_data
   end
 
   private
     attr_reader :year
 
     def handle_data
-      data = []
+      event_arr = []
+      join_arr = []
       (1..12).each do |month|
-        data <<
-        {
-            event: Event.with_year_and_month(year, month),
-            join: TakePartInEvent.with_year_and_month(year, month)
-        }
+        event_arr << Event.with_year_and_month(year, month)
+        join_arr << TakePartInEvent.with_year_and_month(year, month)
       end
-      data
+
+      {
+        event: event_arr,
+        join: join_arr
+      }
     end
 end
