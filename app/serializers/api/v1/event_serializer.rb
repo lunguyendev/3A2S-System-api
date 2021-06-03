@@ -27,6 +27,7 @@ class Api::V1::EventSerializer < ActiveModel::Serializer
   attribute :scope
   attribute :handel_by
   attribute :is_close
+  attribute :form_close
 
   def initialize(object, options = {})
     @current_user = options[:current_user]
@@ -78,6 +79,12 @@ class Api::V1::EventSerializer < ActiveModel::Serializer
 
   def is_close
     return true if object.end_at < DateTime.current
+
+    false
+  end
+
+  def form_close
+    return true if object.end_at <= object.end_at + 1.days
 
     false
   end
