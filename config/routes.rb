@@ -106,6 +106,8 @@ Rails.application.routes.draw do
           resources :statistical, only: [:index], module: :event
         end
       end
+
+      resources :email, only: [:index, :show], param: :uid
     end
   end
 end

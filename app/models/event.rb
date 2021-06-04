@@ -17,4 +17,5 @@ class Event < ApplicationRecord
   scope :with_year_and_month, ->(year, month) {
     where(created_at: Date.new(year, month, 1)..Date.new(year, month, -1)).count
   }
+  scope :cal_scope_by_uids, ->(uids) { where(uid: uids).sum(:scope) }
 end

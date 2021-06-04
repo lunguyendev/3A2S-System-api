@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_24_155821) do
+ActiveRecord::Schema.define(version: 2021_06_04_072143) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,6 +33,15 @@ ActiveRecord::Schema.define(version: 2021_05_24_155821) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["event_uid"], name: "index_calendars_on_event_uid", unique: true
     t.index ["uid"], name: "index_calendars_on_uid", unique: true
+  end
+
+  create_table "emails", primary_key: "uid", id: :string, force: :cascade do |t|
+    t.string "title"
+    t.string "content"
+    t.string "list_email", default: [], array: true
+    t.string "send_by"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "events", primary_key: "uid", id: :string, force: :cascade do |t|
@@ -71,6 +80,7 @@ ActiveRecord::Schema.define(version: 2021_05_24_155821) do
     t.integer "status", default: 0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "evaluated", default: false
     t.index ["uid"], name: "index_take_part_in_events_on_uid", unique: true
   end
 
