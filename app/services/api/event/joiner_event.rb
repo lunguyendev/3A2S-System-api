@@ -24,7 +24,7 @@ class Api::Event::JoinerEvent
     end
 
     def target_user
-      @user ||= User.find(user)
+      @user_by_uid ||= User.find(user)
     end
 
     def check_join_event?
