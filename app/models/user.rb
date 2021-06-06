@@ -7,6 +7,7 @@ class User < ApplicationRecord
   has_one :token, as: :qr_code, dependent: :destroy
   enum status: %i(actived inactived newer)
   enum role: %i(basic creator approval admin)
+  enum gender: %i(male female)
 
   scope :users_by_ids, ->(ids) { where("uid IN (?)", ids) }
   validates :phone, uniqueness: true, allow_blank: true
