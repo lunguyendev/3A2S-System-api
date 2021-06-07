@@ -1,6 +1,27 @@
 # frozen_string_literal: true
 
 class Api::V1::Admin::EventController < AdminController
+  def my_event
+    event = @current_user.events
+
+    @collection_event = Kaminari.paginate_array(event).page(params[:page]).per(10)
+
+    event_serializable = ActiveModelSerializers::SerializableResource.new(
+      @collection_event,
+      each_serializer: Api::V1::EventSerializer,
+      current_user: @current_user
+    )
+
+    response_hash = {
+      data: event_serializable,
+      total_page: @collection_event.total_pages,
+      current_page: @collection_event.current_page,
+      total_count: event.count
+    }
+
+    render json: response_hash
+  end
+
   def approve_event
     unless target_event.pending?
       return render json: { message: I18n.t("message_response.event_updated") }, status: :bad_request
@@ -20,7 +41,11 @@ class Api::V1::Admin::EventController < AdminController
       return render json: { message: I18n.t("message_response.event_updated") }, status: :bad_request
     end
 
+    target_event.update_attributes!(
+      handel_by: @current_user.name
+    )
     target_event.cancel!
+
     head :accepted
   end
 

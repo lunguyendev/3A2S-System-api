@@ -52,6 +52,7 @@ Rails.application.routes.draw do
       end
 
       scope module: :admin do
+        get "admin/my_event", to: "event#my_event"
         resources :event, only: [], param: :event_uid do
           member do
             patch :approve_event
@@ -108,6 +109,10 @@ Rails.application.routes.draw do
       end
 
       resources :email, only: [:index, :show], param: :uid
+
+      scope module: :email do
+        get :email_by_me
+      end
     end
   end
 end

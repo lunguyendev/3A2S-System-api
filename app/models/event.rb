@@ -18,4 +18,9 @@ class Event < ApplicationRecord
     where(created_at: Date.new(year, month, 1)..Date.new(year, month, -1)).count
   }
   scope :cal_scope_by_uids, ->(uids) { where(uid: uids).sum(:scope) }
+  after_create :create_template
+
+  def create_template
+    create_template_feedback
+  end
 end

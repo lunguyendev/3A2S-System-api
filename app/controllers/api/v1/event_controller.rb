@@ -162,15 +162,17 @@ class Api::V1::EventController < ApplicationController
 
     def params_event_update
       params.require(:event).permit(
-        :name,
-        :type_event,
+        :event_name,
+        :avatar,
+        :is_online,
         :size,
         :organization,
         :description,
         :location,
-        :status,
         :start_at,
-        :end_at
+        :scope,
+        :end_at,
+        type_event_uids: []
       )
     end
 

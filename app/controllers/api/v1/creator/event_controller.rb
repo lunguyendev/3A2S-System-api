@@ -3,7 +3,6 @@
 class Api::V1::Creator::EventController < CreatorController
   def create
     event = @current_user.events.create(params_event_create)
-    event.create_template_feedback
     if @current_user.admin? || @current_user.approval?
       event.accept!
       event.update(handel_by: @current_user.name)

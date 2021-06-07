@@ -15,6 +15,12 @@ class Api::V1::EmailController < ApplicationController
     render json: target_email, serializer: Api::V1::EmailSerializer
   end
 
+  def email_by_me
+    emails = Email.where(send_by: @current_user.email)
+
+    render json: emails, each_serializer: Api::V1::EmailSerializer
+  end
+
   private
     def target_email
       @email ||= Email.find(params[:uid])
