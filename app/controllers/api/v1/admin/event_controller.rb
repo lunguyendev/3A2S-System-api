@@ -2,7 +2,7 @@
 
 class Api::V1::Admin::EventController < AdminController
   def my_event
-    event = @current_user.events
+    event = @current_user.events.order("created_at DESC")
 
     @collection_event = Kaminari.paginate_array(event).page(params[:page]).per(10)
 
@@ -45,6 +45,7 @@ class Api::V1::Admin::EventController < AdminController
       handel_by: @current_user.name
     )
     target_event.cancel!
+    target_event.update(cancel_param)
 
     head :accepted
   end
@@ -78,5 +79,9 @@ class Api::V1::Admin::EventController < AdminController
 
     def year_param
       params.permit(:year)
+    end
+
+    def cancel_param
+      params.permit(:note)
     end
 end

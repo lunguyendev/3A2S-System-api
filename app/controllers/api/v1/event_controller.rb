@@ -151,6 +151,12 @@ class Api::V1::EventController < ApplicationController
     render json: events, each_serializer: Api::V1::EventSerializer
   end
 
+  def quality_event
+    data = Api::Event::Statistics::HotEvent.new.all_event
+
+    render json: data
+  end
+
   private
     def events_join
       @current_user.take_part_in_events.pluck(:event_uid)

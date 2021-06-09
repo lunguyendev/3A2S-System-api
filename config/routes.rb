@@ -24,6 +24,7 @@ Rails.application.routes.draw do
           get :search_name_basic
           get :search_name
           post :event_comming
+          get :quality_event
         end
 
         resources :token, only: [], module: :event do
@@ -112,6 +113,12 @@ Rails.application.routes.draw do
 
       scope module: :email do
         get :email_by_me
+      end
+
+      resources :suggestion, only: [:index] do
+        collection do
+          get :type_event_statistics
+        end
       end
     end
   end

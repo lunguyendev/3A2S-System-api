@@ -17,8 +17,17 @@ class Api::Event::Statistics::Creator
   private
     attr_reader :template_uid
 
+    NUMBER_ATTR = [
+      "zero",
+      "one",
+      "two",
+      "three",
+      "four",
+      "five"
+    ]
+
     def total_score
-      Question.question_answers_is_rating(template_uid).average(:scope).to_f
+      Question.question_answers_is_rating(template_uid).average(:scope).to_f.round(1)
     end
 
     def question_rating
@@ -27,8 +36,8 @@ class Api::Event::Statistics::Creator
       data_hash.each do |key, value|
         param = {
           content: Question.find_by(uid: key)&.content,
-          total_rating: value.to_f,
-          detail: Answer.count_scope(key)
+          total_rating: value.to_f.round(1),
+          detail: Hash[Answer.count_scope(key).map { |k, v| [NUMBER_ATTR[k], v] }]
         }
         question_rating << param
       end

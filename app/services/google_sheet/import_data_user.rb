@@ -21,7 +21,8 @@ class GoogleSheet::ImportDataUser
     type: 9,
     birthday: "01-01-1999",
     status: "actived",
-    password_user: generate_hash_password("password123")
+    password_user: generate_hash_password("password123"),
+    avatar: "https://3a2s-system.s3-ap-southeast-1.amazonaws.com/avt_user_default.png"
   }.freeze
 
   def execute

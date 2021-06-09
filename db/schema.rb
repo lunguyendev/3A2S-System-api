@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_04_072143) do
+ActiveRecord::Schema.define(version: 2021_06_09_174540) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,6 +62,7 @@ ActiveRecord::Schema.define(version: 2021_06_04_072143) do
     t.integer "scope", default: 0
     t.string "handel_by"
     t.integer "number_attandance", default: 0
+    t.string "note"
     t.index ["uid"], name: "index_events_on_uid", unique: true
   end
 
@@ -72,6 +73,13 @@ ActiveRecord::Schema.define(version: 2021_06_04_072143) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["uid"], name: "index_questions_on_uid", unique: true
+  end
+
+  create_table "suggestions", primary_key: "uid", id: :string, force: :cascade do |t|
+    t.string "user_uid"
+    t.string "type_event_uid"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "take_part_in_events", primary_key: "uid", id: :string, force: :cascade do |t|
@@ -139,6 +147,8 @@ ActiveRecord::Schema.define(version: 2021_06_04_072143) do
   add_foreign_key "calendars", "events", column: "event_uid", primary_key: "uid", on_update: :cascade, on_delete: :cascade
   add_foreign_key "events", "users", column: "user_uid", primary_key: "uid", on_update: :cascade, on_delete: :cascade
   add_foreign_key "questions", "template_feedbacks", column: "template_feedback_uid", primary_key: "uid", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "suggestions", "type_events", column: "type_event_uid", primary_key: "uid", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "suggestions", "users", column: "user_uid", primary_key: "uid", on_update: :cascade, on_delete: :cascade
   add_foreign_key "take_part_in_events", "events", column: "event_uid", primary_key: "uid", on_update: :cascade, on_delete: :cascade
   add_foreign_key "take_part_in_events", "users", column: "user_uid", primary_key: "uid", on_update: :cascade, on_delete: :cascade
   add_foreign_key "template_feedbacks", "events", column: "event_uid", primary_key: "uid", on_update: :cascade, on_delete: :cascade

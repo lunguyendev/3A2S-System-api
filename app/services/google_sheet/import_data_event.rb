@@ -2,7 +2,6 @@
 
 class GoogleSheet::ImportDataEvent
   include Util::Generation
-  Faker::Config.locale = :vi
   def initialize(args = {})
     @worksheet = GoogleSheet::FindWorksheetService.new(
       spreadsheet_key: args[:spreadsheet_key],
@@ -22,7 +21,7 @@ class GoogleSheet::ImportDataEvent
     is_online: false,
     scope: 10,
     avatar: 11,
-    handel_by: Faker::Name.name,
+    handel_by: User.find_by(email: "admin@dtu.edu.com").name,
     status: "accept"
   }.freeze
 
@@ -36,7 +35,7 @@ class GoogleSheet::ImportDataEvent
         size: item[EVENT_ATTR[:size]].to_i,
         organization: item[EVENT_ATTR[:organization]],
         description: item[EVENT_ATTR[:description]],
-        start_at: EVENT_ATTR[:start_at],
+        start_at: item[EVENT_ATTR[:start_at]],
         end_at: item[EVENT_ATTR[:end_at]],
         location: item[EVENT_ATTR[:location]],
         is_online: EVENT_ATTR[:is_online],

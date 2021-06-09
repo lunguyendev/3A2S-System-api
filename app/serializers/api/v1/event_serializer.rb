@@ -14,6 +14,7 @@ class Api::V1::EventSerializer < ActiveModel::Serializer
     :status,
     :handel_by,
     :start_at,
+    :note,
     :end_at
 
   belongs_to :user, serializer: Api::V1::UserSerializer
