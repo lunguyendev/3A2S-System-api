@@ -2,6 +2,7 @@
 
 class Api::V1::Creator::Event::QuestionController < CreatorController
   def create
+    target_template.questions.destroy_all
     params_question.each do |params|
       target_template.questions.create!(params)
     end
