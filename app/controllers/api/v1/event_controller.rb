@@ -28,7 +28,7 @@ class Api::V1::EventController < ApplicationController
   end
 
   def list
-    event = Event.accept.created_at_desc
+    event = Event.accept.organizing.created_at_desc
     @collection_event = Kaminari.paginate_array(event).page(params[:page]).per(params[:size_page] || 10)
 
     event_serializable = ActiveModelSerializers::SerializableResource.new(
