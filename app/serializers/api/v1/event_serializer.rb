@@ -86,7 +86,7 @@ class Api::V1::EventSerializer < ActiveModel::Serializer
   end
 
   def form_close
-    return true if object.end_at <= object.end_at + 1.days
+    return true if DateTime.current >= object.end_at + 2.days
 
     false
   end
