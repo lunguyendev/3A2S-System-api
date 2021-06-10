@@ -18,4 +18,23 @@ class EventMailer < ApplicationMailer
       subject: "Reset password",
     )
   end
+
+  def approval_event(email, name, name_event)
+    @name = name
+    @name_event = name_event
+    mail(
+      to: email,
+      subject: "Event approved",
+    )
+  end
+
+  def cancel_event(email, name, name_event, note)
+    @name = name
+    @name_event = name_event
+    @note = note
+    mail(
+      to: email,
+      subject: "Event denied",
+    )
+  end
 end

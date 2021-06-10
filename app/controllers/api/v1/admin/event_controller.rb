@@ -32,6 +32,7 @@ class Api::V1::Admin::EventController < AdminController
       handel_by: @current_user.name
     )
     target_event.accept!
+    EventMailer.approval_event(target_event.user.email, target_event.user.name, target_event.event_name).deliver_later
 
     head :accepted
   end
@@ -46,6 +47,7 @@ class Api::V1::Admin::EventController < AdminController
     )
     target_event.cancel!
     target_event.update(cancel_param)
+    EventMailer.cancel_event(target_event.user.email, target_event.user.name, target_event.event_name, target_event.note).deliver_later
 
     head :accepted
   end
