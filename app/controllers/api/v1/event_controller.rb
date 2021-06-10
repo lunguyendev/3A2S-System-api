@@ -54,7 +54,7 @@ class Api::V1::EventController < ApplicationController
   end
 
   def joined_event
-    events = Event.joined_event(events_join)
+    events = Event.joined_event(events_join).order("end_at DESC")
 
     @collection_event = Kaminari.paginate_array(events).page(params[:page]).per(params[:size_page] || 10)
 
