@@ -22,6 +22,14 @@ class Event < ApplicationRecord
   scope :event_not_uid, -> (events) { where.not(uid: events) }
   after_create :create_template
 
+  validate :valid_dates
+
+  def valid_dates
+    if start_at >= end_at - 1.hours
+      self.errors.add :start_time, ' has to be after end time'
+    end
+  end
+
   def create_template
     create_template_feedback
   end

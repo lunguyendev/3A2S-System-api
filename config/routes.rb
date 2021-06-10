@@ -36,6 +36,7 @@ Rails.application.routes.draw do
         resources :take_part_in_event, only: [:create], module: :event do
           collection do
             post :cancel
+            get :email
           end
         end
 

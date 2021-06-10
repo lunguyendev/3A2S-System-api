@@ -19,6 +19,13 @@ class Api::V1::Event::TakePartInEventController < ApplicationController
     head :accepted
   end
 
+  def email
+    uid_users = TakePartInEvent.where(event_uid: params[:event_uid]).pluck(:user_uid)
+    emails = User.where(uid: uid_users).pluck(:email)
+
+    render json: { email: emails }
+  end
+
   private
     def target_event
       @event = Event.find(params[:event_uid])
