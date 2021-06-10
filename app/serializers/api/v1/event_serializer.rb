@@ -61,7 +61,8 @@ class Api::V1::EventSerializer < ActiveModel::Serializer
     {
       uid: join_event&.uid,
       is_join_event: is_join_event,
-      attendance: join_event&.presence? || false
+      attendance: join_event&.presence? || false,
+      is_feeback: join_event.evaluated
     }
   end
 
