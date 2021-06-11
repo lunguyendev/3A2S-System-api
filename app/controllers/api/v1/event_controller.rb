@@ -29,7 +29,7 @@ class Api::V1::EventController < ApplicationController
 
   def list
     event = Event.accept.organizing.created_at_desc
-    event_join = Event.joined_event(TakePartInEvent.where(user_uid: @current_user.uid).pluck(:uid)).organizing
+    event_join = Event.joined_event(TakePartInEvent.where(user_uid: @current_user.uid).pluck(:event_uid)).organizing
     events = event - event_join
     @collection_event = Kaminari.paginate_array(events).page(params[:page]).per(params[:size_page] || 10)
 

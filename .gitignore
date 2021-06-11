@@ -70,3 +70,7 @@ yarn-debug.log*
 # /config/application.yml
 /test
 config/application.yml
+token.yaml
+credentials.json
+containers/env
+client_secret.json
