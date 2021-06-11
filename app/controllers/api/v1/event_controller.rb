@@ -29,7 +29,9 @@ class Api::V1::EventController < ApplicationController
 
   def list
     event = Event.accept.organizing.created_at_desc
-    @collection_event = Kaminari.paginate_array(event).page(params[:page]).per(params[:size_page] || 10)
+    event_join = Event.joined_event(TakePartInEvent.where(user_uid: @current_user.uid).pluck(:uid)).organizing
+    events = event - event_join
+    @collection_event = Kaminari.paginate_array(events).page(params[:page]).per(params[:size_page] || 10)
 
     event_serializable = ActiveModelSerializers::SerializableResource.new(
       @collection_event,
@@ -41,7 +43,7 @@ class Api::V1::EventController < ApplicationController
       data: event_serializable,
       total_page: @collection_event.total_pages,
       current_page: @collection_event.current_page,
-      total_count: event.count
+      total_count: events.count
     }
 
     render json: response_hash
